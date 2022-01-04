@@ -6,22 +6,36 @@ module.exports = {
     entry: path.resolve(__dirname, 'src/index.tsx'),
     resolve: {
         alias: {
-            '@booksbridge': path.resolve(__dirname, 'src')
-        }
+            '@src': path.resolve(__dirname, 'src')
+        },
+        extensions: ['.ts', '.tsx', '.js', '.json']
     },
     module: {
         rules: [
             {
-                // .ts, .tsx 파일들을 ts-loader를 이용해 컴파일하여 번들링
+                test: /\.s[ac]ss$/i,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+            {
                 test: /\.(ts|tsx)$/,
                 exclude: /node_modules/,
                 resolve: {
                     extensions: ['.ts', '.tsx', '.js', '.json'],
                 },
                 use: 'ts-loader',
-            }
+            },
+            // {
+            //     test: /\.jsx?$/,
+            //     exclude: /(node_modules)/,
+            //     use: 'babel-loader',
+            // }
         ]
     },
+    mode: 'development',
     devServer: {
         historyApiFallback: true // SPA를 위한 설정
     },
